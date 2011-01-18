@@ -1,4 +1,13 @@
 <form action="/laser" method="post" enctype="multipart/form-data">
-  <label>File:</label> <input type="file" name="data"> 
-  <input type="submit" value="upload" />
+  <p>
+    <label>NYU Login:</label> <input name="login" type="text" />
+  </p>
+  <p>
+    <label>NYU Password</label> <input name="password" type="password" />
+  </p>
+  <p>
+    <label>Description/Notes</label><br /><textarea name="description" type="text" cols=50 rows=5></textarea>
+  </p>
+  <p><label>File:</label> <input type="file" name="data"></p>
+  <p><input type="submit" value="upload" /></p>
 </form>

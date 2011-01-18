@@ -1,0 +1,26 @@
+<h2>Unapproved Jobs</h2>
+
+<ul>
+  <% for job in @unapproved_jobs%>
+    <li><p><b>Submitted by:</b> <%= job.nyu_login %></p>
+    <p><b>Submitted at:</b> <%= job.created_at %></p>
+    <p><b>Description</b> <%= job.description %></p>
+    <form action="/laser/approve" method="post">
+      <input type="hidden" name="job_id" value="<%= job.id %>" />
+      <input type="submit" value="approved!" />
+    </form>
+    </li>
+  <% end %>
+</ul>
+
+
+<h2>Approved Jobs</h2>
+
+<ul>
+  <% for job in @unapproved_jobs%>
+    <li><p><b>Submitted by:</b> <%= job.nyu_login %></p>
+    <p><b>Submitted at:</b> <%= job.created_at %></p>
+    <p><b>Description</b> <%= job.description %></p>
+    </li>
+  <% end %>
+</ul>
