@@ -1,23 +1,18 @@
-<h2>Unapproved Jobs</h2>
-
+<h2>All Jobs by <%= @jobs.first.nyu_login %> (<%= @jobs.length %>)</h2>
+<h2>Unapproved Jobs (<%= @unapproved_jobs.length %>)</h2>
 <ul>
   <% for job in @unapproved_jobs%>
     <li>
     <h4><a href="/jobs/<%= job.id %>">Job <%= job.id %></a></h4>
-
     <%= partial :job, :locals => {:job => job} %>
-    <form action="/laser/approve" method="post">
-      <input type="hidden" name="job_id" value="<%= job.id %>" />
-      <input type="submit" value="approved!" />
-    </form>
     </li>
   <% end %>
 </ul>
 
-<h2>Approved Jobs</h2>
+<h2>Approved Jobs (<%= @approved_jobs.length %>)</h2>
 
 <ul>
-  <% for job in @approved_jobs%>
+  <% for job in @approved_jobs %>
     <li>
       
     <h4><a href="/jobs/<%= job.id %>">Job <%= job.id %></a></h4>

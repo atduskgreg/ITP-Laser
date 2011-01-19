@@ -26,8 +26,15 @@ class ITPLaser < Sinatra::Base
     erb :new_laser
   end
   
+  get "/user/:login/jobs" do
+    @jobs = WorkJob.all(:nyu_login => params[:login])
+    @approved_jobs, @unapproved_jobs = @jobs.partition{|j| j.approved?}
+    erb :user_jobs
+  end
+  
   post "/laser" do
-    authenticate_or_redirect(:to => "/laser/new")
+    # WHY DOES THIS SCREW UP the file upload?
+    # authenticate_or_redirect(:to => "/laser/new")
     
     job = WorkJob.create!(
       :created_at => Time.now, 
@@ -37,10 +44,10 @@ class ITPLaser < Sinatra::Base
     design_file = job.design_files.create!    
     design_file.upload!(params[:data][:tempfile], params[:data][:filename])
                        
-    redirect "/laser/jobs/#{job.id}"
+    redirect "/jobs/#{job.id}"
   end
   
-  get "/laser/jobs/:id" do
+  get "/jobs/:id" do
     @job = WorkJob.get params[:id]
     erb :job
   end
