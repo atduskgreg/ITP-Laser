@@ -17,7 +17,7 @@
 <h2>Approved Jobs</h2>
 
 <ul>
-  <% for job in @unapproved_jobs%>
+  <% for job in @approved_jobs%>
     <li><p><b>Submitted by:</b> <%= job.nyu_login %></p>
     <p><b>Submitted at:</b> <%= job.created_at %></p>
     <p><b>Description</b> <%= job.description %></p>

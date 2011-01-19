@@ -17,7 +17,7 @@ post "/laser" do
   @job = WorkJob.create!(:created_at => Time.now, 
                          :nyu_login => params[:login], 
                          :description => params[:description])
-  # DesignFile.upload_file(params[:data][:tempfile])
+  DesignFile.upload_file(params[:data][:tempfile])
   # params[:data][:tempfile].path
   redirect '/laser/jobs' # TODO: no! users don't get sent here.
 end
