@@ -18,6 +18,10 @@ class WorkJob
   property :created_at,   DateTime  
   
   has n, :design_files
+  
+  def status
+    self.approved? ? "approved" : "pending"
+  end
 end
 
 class DesignFile

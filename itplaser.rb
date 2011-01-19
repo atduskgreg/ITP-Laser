@@ -1,7 +1,9 @@
 require 'rubygems'
 require 'sinatra'
 require 'models'
+require 'partials'
 
+helpers Sinatra::Partials
 set :views, File.dirname(__FILE__) + '/views'
 
 get "/" do
@@ -13,15 +15,20 @@ get "/laser/new" do
 end
 
 post "/laser" do
-  # credential user: :login => params[:login], :password => params[:password]
   job = WorkJob.create!(
     :created_at => Time.now, 
     :nyu_login => params[:login], 
     :description => params[:description])
   
   design_file = job.design_files.create!    
-  design_file.upload!(params[:data][:tempfile], params[:data][:filename])                   
-  redirect '/laser/jobs' # TODO: no! users don't get sent here.
+  design_file.upload!(params[:data][:tempfile], params[:data][:filename])
+                     
+  redirect "/laser/jobs/#{job.id}" # TODO: no! users don't get sent here.
+end
+
+get "/laser/jobs/:id" do
+  @job = WorkJob.get params[:id]
+  erb :job
 end
 
 get "/laser/jobs" do

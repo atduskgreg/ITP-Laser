@@ -2,13 +2,10 @@
 
 <ul>
   <% for job in @unapproved_jobs%>
-    <li><p><b>Submitted by:</b> <%= job.nyu_login %></p>
-    <p><b>Submitted at:</b> <%= job.created_at %></p>
-    <p><b>Description</b> <%= job.description %></p>
-    <p><b>File:</b> <% for f in job.design_files %>
-        <a href="<%= f.url %>"><%= f.filename %></a> 
-      <% end %>
-      </p>
+    <li>
+    <h4><a href="/laser/jobs/<%= job.id %>">Job <%= job.id %></a></h4>
+
+    <%= partial :job, :locals => {:job => job} %>
     <form action="/laser/approve" method="post">
       <input type="hidden" name="job_id" value="<%= job.id %>" />
       <input type="submit" value="approved!" />
@@ -17,18 +14,13 @@
   <% end %>
 </ul>
 
-
 <h2>Approved Jobs</h2>
 
 <ul>
   <% for job in @approved_jobs%>
-    <li><p><b>Submitted by:</b> <%= job.nyu_login %></p>
-    <p><b>Submitted at:</b> <%= job.created_at %></p>
-    <p><b>Description</b> <%= job.description %></p>
-    <p><b>File:</b> <% for f in job.design_files %>
-        <a href="<%= f.url %>"><%= f.filename %></a> 
-      <% end %>
-      </p>
-    </li>
+    <li>
+      
+    <h4><a href="/laser/jobs/<%= job.id %>">Job <%= job.id %></a></h4>
+    <%= partial :job, :locals => {:job => job} %></li>
   <% end %>
 </ul>
