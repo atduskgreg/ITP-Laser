@@ -1,10 +1,13 @@
 TODO:
 
-- upload of illustrator files by students
-- review of illustrator files by residents
-- residents communicate with students by email
+- user can view list of their own jobs
+- user can delete their jobs
+(- user can edit description, etc.)
+ 
+- jobs can be marked as completed
+
+- resubmit jobs (i.e. mark as unapproved and uncompleted)
+- use notes to keep track of what happened (i.e. edit it to write down)
+- materials pulldown
+
 - residents can replace illustrator files with modified ones
-- residents mark illustrator files as approved
-
-
-- approved jobs get scheduled for time on laser

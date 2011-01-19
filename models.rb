@@ -1,6 +1,7 @@
 require 'dm-core'
 require 'dm-migrations'
 require 'net/sftp'
+require 'net/http'
 
 FTP_URL = "itp.nyu.edu"
 FTP_PATH = "/some/path"
@@ -8,6 +9,27 @@ FTP_USER = "your username"
 FTP_PASSWORD = "your password"
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'mysql://localhost/itplaser')
+
+class NYUser
+  LDAP_PROXY = 'http://itp.nyu.edu/~cmk380/ldap_proxy/'
+  
+  def self.authenticate(user, pass)
+    res = Net::HTTP.post_form(URI.parse(LDAP_PROXY), {'username'=>user, 'password'=>pass})
+    res.body == "true"
+  end
+  
+  def jobs
+    @jobs ||= WorkJobs.all
+  end
+  
+  def approved_jobs
+    @jobs.select{|j| j.approved?}
+  end
+  
+  def unapproved_jobs
+    @jobs.select{|j| !j.approved?}
+  end
+end
 
 class WorkJob
   include DataMapper::Resource   

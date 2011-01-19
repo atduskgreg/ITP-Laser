@@ -1,0 +1,2 @@
+require 'itplaser'
+run ITPLaser

@@ -10,9 +10,28 @@
       .status_pending {
         color: red;
       }
+      
+      #error {
+        color: red;
+      }
+      
+      #notice {
+        color: green;
+      }
+      
     </style>
   </head>
   <body>
+    <% if flash[:error] %>
+    <div id="error">
+      <%= flash[:error] %>
+    </div>
+    <% end %>
+    <% if flash[:notice] %>
+    <div id="notice">
+      <%= flash[:notice] %>
+    </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>
