@@ -4,6 +4,8 @@ require 'models'
 require 'partials'
 require 'rack-flash'
 
+
+
 class ITPLaser < Sinatra::Base
   helpers Sinatra::Partials
   use Rack::Flash
@@ -11,9 +13,13 @@ class ITPLaser < Sinatra::Base
   enable :sessions
   set :views, File.dirname(__FILE__) + '/views'
   
+  class NoWayJose < Exception; end
+
   def authenticate_or_redirect(opts)
-    unless NYUser.authenticate(params[:login], params[:password])
-      flash[:error] =  "Bad credentials."
+    if NYUser.authenticate(params[:login], params[:password])
+      return true
+    else
+      flash[:error] = "Bad password or username."
       redirect opts[:to]
     end
   end
@@ -33,9 +39,8 @@ class ITPLaser < Sinatra::Base
   end
   
   post "/laser" do
-    # WHY DOES THIS SCREW UP the file upload?
-    # authenticate_or_redirect(:to => "/laser/new")
-    
+    authenticate_or_redirect(:to => "/laser/new")
+
     job = WorkJob.create!(
       :created_at => Time.now, 
       :nyu_login => params[:login], 
