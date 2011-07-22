@@ -1,6 +1,5 @@
 TODO:
 
-- user can view list of their own jobs
 - user can delete their jobs
 (- user can edit description, etc.)
  

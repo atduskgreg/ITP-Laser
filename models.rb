@@ -40,6 +40,7 @@ class WorkJob
   include DataMapper::Resource   
   property :id,           Serial
   property :approved,     Boolean
+  property :completed,    Boolean
   property :nyu_login,    String
   property :description,  String
   property :created_at,   DateTime  
@@ -48,6 +49,12 @@ class WorkJob
   
   def status
     self.approved? ? "approved" : "pending"
+  end
+  
+  def resubmit
+    self.approved = false
+    self.completed = false
+    self.save
   end
 end
 

@@ -52,6 +52,28 @@ class ITPLaser < Sinatra::Base
     redirect "/jobs/#{job.id}"
   end
   
+  post "/session" do
+    if(authenticate_or_redirect(:to => "/login"))
+      # put nyu_login in session
+      flash[:notice] = "Login successful."
+    end
+  end
+  
+  delete "/jobs/:id" do
+    @job = WorkJob.get params[:id]
+    if(@job.nyu_login == params[:login])
+      authenticate_or_redirect(:to => "/user/#{params[:login]}/jobs")
+      @job.destroy
+      # also need to remove file?
+      flash[:notice] = "Job was successflly deleted."
+    else
+      flash[:error] = "Can only delete jobs you created."
+    end
+    
+    redirect "/user/#{params[:login]}/jobs"
+
+  end
+  
   get "/jobs/:id" do
     @job = WorkJob.get params[:id]
     erb :job
@@ -61,6 +83,13 @@ class ITPLaser < Sinatra::Base
     @approved_jobs, @unapproved_jobs = WorkJob.all.partition{|j| j.approved?}
     erb :jobs
   end
+  
+  post "/laser/complete" do
+    @job = WorkJob.get(params[:job_id])
+    @job.completed = true
+    @job.save!
+    redirect "/jobs/#{params[:job_id]}"
+  end  
   
   post "/laser/approve" do
     @job = WorkJob.get(params[:job_id])

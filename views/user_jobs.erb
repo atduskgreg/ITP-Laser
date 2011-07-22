@@ -5,6 +5,9 @@
     <li>
     <h4><a href="/jobs/<%= job.id %>">Job <%= job.id %></a></h4>
     <%= partial :job, :locals => {:job => job} %>
+    <form action="/jobs/<%= job.id %>" method="delete">
+      <input type="submit" value="delete" />
+    </form>
     </li>
   <% end %>
 </ul>
