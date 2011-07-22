@@ -10,11 +10,6 @@ FTP_PASSWORD = "your password"
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'mysql://localhost/itplaser')
 
-FTP_URL = "itp.nyu.edu"
-FTP_PATH = "/something"
-FTP_USER = "you"
-FTP_PASSWORD = "your password"
-
 class NYUser
   LDAP_PROXY = 'http://itp.nyu.edu/~cmk380/ldap_proxy/'
   
@@ -72,7 +67,7 @@ class DesignFile
   end
   
   def url
-    "http://itp.nyu.edu/~gab305/lasertest/#{filename}"
+    "http://#{FTP_URL}/#{FTP_PATH}/#{filename}"
   end
   
   def self.upload_file(tmp, filename)
