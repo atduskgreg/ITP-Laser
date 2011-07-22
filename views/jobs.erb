@@ -5,6 +5,10 @@
     <li><p><b>Submitted by:</b> <%= job.nyu_login %></p>
     <p><b>Submitted at:</b> <%= job.created_at %></p>
     <p><b>Description</b> <%= job.description %></p>
+    <p><b>File:</b> <% for f in job.design_files %>
+        <a href="<%= f.url %>"><%= f.filename %></a> 
+      <% end %>
+      </p>
     <form action="/laser/approve" method="post">
       <input type="hidden" name="job_id" value="<%= job.id %>" />
       <input type="submit" value="approved!" />
@@ -21,6 +25,10 @@
     <li><p><b>Submitted by:</b> <%= job.nyu_login %></p>
     <p><b>Submitted at:</b> <%= job.created_at %></p>
     <p><b>Description</b> <%= job.description %></p>
+    <p><b>File:</b> <% for f in job.design_files %>
+        <a href="<%= f.url %>"><%= f.filename %></a> 
+      <% end %>
+      </p>
     </li>
   <% end %>
 </ul>

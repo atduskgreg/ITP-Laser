@@ -23,12 +23,23 @@ end
 class DesignFile
   include DataMapper::Resource   
   property :id,           Serial
-  
+  property :filename,     String  
   belongs_to :work_job
   
-  def self.upload_file(tmp)
+
+  def upload!(tmp, orig_filename)
+    self.filename = "#{work_job.nyu_login}_#{orig_filename}"
+    DesignFile.upload_file(tmp, self.filename)
+    self.save!
+  end
+  
+  def url
+    "http://itp.nyu.edu/~gab305/lasertest/#{filename}"
+  end
+  
+  def self.upload_file(tmp, filename)
     Net::SFTP.start(FTP_URL, FTP_USER, :password => FTP_PASSWORD) do |sftp|
-      sftp.upload!(tmp.path, "#{FTP_PATH}/filename_123.ai")
+      sftp.upload!(tmp.path, "#{FTP_PATH}/#{filename}")
     end
      # PASSIVE MODE FTP FOR HEROKU:
     # ftp = Net::FTP.open("itp.nyu.edu") do |ftp|

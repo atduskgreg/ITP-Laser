@@ -14,11 +14,13 @@ end
 
 post "/laser" do
   # credential user: :login => params[:login], :password => params[:password]
-  @job = WorkJob.create!(:created_at => Time.now, 
-                         :nyu_login => params[:login], 
-                         :description => params[:description])
-  DesignFile.upload_file(params[:data][:tempfile])
-  # params[:data][:tempfile].path
+  job = WorkJob.create!(
+    :created_at => Time.now, 
+    :nyu_login => params[:login], 
+    :description => params[:description])
+  
+  design_file = job.design_files.create!    
+  design_file.upload!(params[:data][:tempfile], params[:data][:filename])                   
   redirect '/laser/jobs' # TODO: no! users don't get sent here.
 end
 
