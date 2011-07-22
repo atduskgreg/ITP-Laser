@@ -10,6 +10,11 @@ FTP_PASSWORD = "your password"
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'mysql://localhost/itplaser')
 
+FTP_URL = "itp.nyu.edu"
+FTP_PATH = "/something"
+FTP_USER = "you"
+FTP_PASSWORD = "your password"
+
 class NYUser
   LDAP_PROXY = 'http://itp.nyu.edu/~cmk380/ldap_proxy/'
   
