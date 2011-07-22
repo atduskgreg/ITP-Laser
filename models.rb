@@ -2,6 +2,11 @@ require 'dm-core'
 require 'dm-migrations'
 require 'net/sftp'
 
+FTP_URL = "itp.nyu.edu"
+FTP_PATH = "/some/path"
+FTP_USER = "your username"
+FTP_PASSWORD = "your password"
+
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'mysql://localhost/itplaser')
 
 class WorkJob
@@ -22,8 +27,8 @@ class DesignFile
   belongs_to :work_job
   
   def self.upload_file(tmp)
-    Net::SFTP.start('itp.nyu.edu', 'gab305', :password => '!Poa20876') do |sftp|
-      sftp.upload!(tmp.path, "/home/gab305/public_html/lasertest/filename_123.ai")
+    Net::SFTP.start(FTP_URL, FTP_USER, :password => FTP_PASSWORD) do |sftp|
+      sftp.upload!(tmp.path, "#{FTP_PATH}/filename_123.ai")
     end
      # PASSIVE MODE FTP FOR HEROKU:
     # ftp = Net::FTP.open("itp.nyu.edu") do |ftp|
