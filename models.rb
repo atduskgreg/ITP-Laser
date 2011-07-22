@@ -79,6 +79,7 @@ class DesignFile
     Net::SFTP.start(FTP_URL, FTP_USER, :password => FTP_PASSWORD) do |sftp|
       sftp.upload!(tmp.path, "#{FTP_PATH}/#{filename}")
     end
+    
      # PASSIVE MODE FTP FOR HEROKU:
     # ftp = Net::FTP.open("itp.nyu.edu") do |ftp|
     #      ftp.login(user = "gab305", passwd = "!Poa20876")
